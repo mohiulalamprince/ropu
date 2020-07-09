@@ -13,6 +13,8 @@ pipeline {
         }
 	stage("Build image") {
             steps {
+		
+		sh 'docker ps'
 		script {
                     myapp = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
 		}
