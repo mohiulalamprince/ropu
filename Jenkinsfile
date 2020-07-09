@@ -12,6 +12,12 @@ pipeline {
             	sh 'pwd'
 	    }
         }
+        stage('Test') { 
+            steps {
+                //sh 'mvn test' 
+            	sh 'pwd'
+	    }
+        }
 	stage('Create image and push') {
 		steps {
 			sh 'pwd'
