@@ -12,14 +12,23 @@ pipeline {
             }
         }
 	stage('Create image and push') {
+		node {
+		    checkout scm
+		    
+		    environment {
+			registry = "mohiulalamprince/test-ropu"
+			registryCredential = 'dockerhub'
+			dockerImage = ''
+		    }
+		    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+
+			def customImage = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
+
+			/* Push the container to the custom Registry */
+			customImage.push()
+		    }
+		}
 		
-    		docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-
-        		def customImage = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
-
-        		/* Push the container to the custom Registry */
-        		customImage.push()
-    		}
 	}	
     }
 }
