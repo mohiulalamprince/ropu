@@ -13,10 +13,12 @@ pipeline {
         }*/
 	stage("Build image") {
             steps {
+		docker {
 		sh 'mvn --version'
 		sh 'docker ps'
 		script {
                     myapp = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
+		}
 		}
             }
         }
