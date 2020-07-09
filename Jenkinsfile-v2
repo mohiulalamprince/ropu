@@ -6,7 +6,7 @@ node {
 	registryCredential = 'dockerhub'
 	dockerImage = ''
     }
-    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
 
         def customImage = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
 
