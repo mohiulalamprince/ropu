@@ -1,4 +1,4 @@
-node {
+pipeline {
     agent {
         docker {
             image 'maven:3-alpine' 
@@ -10,6 +10,15 @@ node {
             steps {
                 //sh 'mvn -B -DskipTests clean package' 
             	sh 'pwd'
+		script {
+			    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+
+				def customImage = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
+
+				/* Push the container to the custom Registry */
+				customImage.push()
+			    }
+		}
 	    }
         }
         stage('Test') { 
