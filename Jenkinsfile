@@ -14,8 +14,7 @@ pipeline {
         }
 	stage('Create image and push') {
 		steps {
-		    node {
-			label 'image create'
+		    node ('image') {
 			sh 'pwd'
 			script {
 			    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
