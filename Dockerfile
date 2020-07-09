@@ -1,5 +1,5 @@
 # we will use openjdk 8 with alpine as it is a very small linux distro
-FROM openjdk:8-jre-alpine3.9
+FROM maven:3.5.2-jdk-8-alpine
 
 RUN mvn --version
 RUN mvn clean install
