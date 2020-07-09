@@ -1,17 +1,20 @@
 # we will use openjdk 8 with alpine as it is a very small linux distro
-FROM maven:3.5.2-jdk-8-alpine
 
-RUN mvn --version
+FROM maven:3.6.1-jdk-8-alpine AS MAVEN_BUILD
 
-COPY src /tmp/src
-WORKDIR /tmp/src
+# copy the pom and src code to the container
+COPY ./ ./
 
-RUN echo "PWD is: $PWD"
+# package our application code
+RUN mvn clean package
 
-RUN mvn clean install
- 
-# copy the packaged jar file into our docker image
-COPY target/ropu-*.jar /demo.jar
- 
+# the second stage of our build will use open jdk 8 on alpine 3.9
+FROM openjdk:8-jre-alpine3.9
+
+RUN ls
+
+# copy only the artifacts we need from the first stage and discard the rest
+COPY --from=MAVEN_BUILD target/ropu*.jar /demo.jar
+
 # set the startup command to execute the jar
 CMD ["java", "-jar", "/demo.jar"]
