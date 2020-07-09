@@ -23,14 +23,14 @@ pipeline {
         }
 	stage("Build image") {
             steps {
-		stage {
+		step {
                     myapp = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
 		}
             }
         }
         stage("Push image") {
             steps {
-		stage {
+		step {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                             myapp.push("latest")
                             myapp.push("${env.BUILD_ID}")
