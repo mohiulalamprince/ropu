@@ -16,8 +16,7 @@ pipeline {
     stage('Docker Build') {
       agent any
       steps {
-	def buildId = ${env.BUILD_ID}
-        sh 'docker build -t mohiulalamprince/test-ropu:$buildId .'
+        sh 'docker build -t mohiulalamprince/test-ropu:latest .'
       }
     }
     stage('Docker Push') {
@@ -25,8 +24,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-	  def buildId = ${env.BUILD_ID}
-          sh 'docker push mohiulalamprince/test-ropu:$buildId'
+          sh 'docker push mohiulalamprince/test-ropu:latest'
         }
       }
     }
