@@ -2,6 +2,12 @@
 FROM maven:3.5.2-jdk-8-alpine
 
 RUN mvn --version
+
+COPY ropu /tmp/ropu
+WORKDIR /tmp/ropu
+
+RUN echo "PWD is: $PWD"
+
 RUN mvn clean install
  
 # copy the packaged jar file into our docker image
