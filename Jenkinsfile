@@ -9,10 +9,12 @@ pipeline {
         stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
-            }
+            	sh 'pwd'
+	    }
         }
 	stage('Create image and push') {
 		steps {
+			sh 'pwd'
 			script {
 			    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
 
