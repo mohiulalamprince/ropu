@@ -11,16 +11,6 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package' 
             }
         }
-        stage('Test') { 
-            steps {
-                sh 'mvn test' 
-            }
-        }
-        stage('Create Jar') { 
-            steps {
-                sh 'mvn clean install' 
-            }
-        }
 	stage("Build image") {
             steps {
 		script {
