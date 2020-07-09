@@ -23,15 +23,19 @@ pipeline {
         }
 	stage("Build image") {
             steps {
+		stage {
                     myapp = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
+		}
             }
         }
         stage("Push image") {
             steps {
+		steps {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                             myapp.push("latest")
                             myapp.push("${env.BUILD_ID}")
                     }
+		}
             }
         }       
     }
