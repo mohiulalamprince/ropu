@@ -12,14 +12,7 @@ pipeline {
             }
         }
 	stage('Create image and push') {
-		node {
-		    checkout scm
-		    
-		    environment {
-			registry = "mohiulalamprince/test-ropu"
-			registryCredential = 'dockerhub'
-			dockerImage = ''
-		    }
+		steps {
 		    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
 
 			def customImage = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
