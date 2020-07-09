@@ -14,9 +14,9 @@ pipeline {
         }
 	stage('Create image and push') {
 		steps {
-		    node ('image') {
 			sh 'pwd'
 			script {
+			    sh 'pwd'
 			    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
 
 				def customImage = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
@@ -25,7 +25,6 @@ pipeline {
 				customImage.push()
 			    }
 			}
-		    }	
 		}
 		
 	}	
