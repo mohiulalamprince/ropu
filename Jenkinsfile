@@ -6,28 +6,20 @@ pipeline {
         }
     }
     stages {
-        /*stage('Build') { 
+        stage('Build') { 
             steps {
                 sh 'mvn -B -DskipTests clean package' 
             }
-        }*/
-	stage("Build image") {
-            steps {
-		sh 'mvn --version'
-		script {
-                    myapp = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
-		}
-            }
         }
-        stage("Push image") {
-            steps {
-		script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")
-                    }
-		}
-            }
-        }       
+	stage('Create image and push') {
+		
+    		docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+
+        		def customImage = docker.build("mohiulalamprince/test-ropu:${env.BUILD_ID}")
+
+        		/* Push the container to the custom Registry */
+        		customImage.push()
+    		}
+	}	
     }
 }
