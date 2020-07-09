@@ -16,7 +16,7 @@ pipeline {
                 sh 'mvn test' 
             }
         }
-        stage('Test') { 
+        stage('Create Jar') { 
             steps {
                 sh 'mvn clean install' 
             }
