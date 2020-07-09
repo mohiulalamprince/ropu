@@ -3,8 +3,8 @@ FROM maven:3.5.2-jdk-8-alpine
 
 RUN mvn --version
 
-COPY ropu /tmp/ropu
-WORKDIR /tmp/ropu
+COPY src /tmp/src
+WORKDIR /tmp/
 
 RUN echo "PWD is: $PWD"
 
